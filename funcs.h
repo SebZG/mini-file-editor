@@ -5,7 +5,7 @@
 
 #define BUFF_SIZE 1024
 
-static void get_timestamp(char *buff, size_t n);
+void get_timestamp(char *buff, size_t n);
 void log_action(const char *fmt, ...);
 void create_file();
 void append_file();
