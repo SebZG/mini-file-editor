@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Compile C Project",
+    "command": "gcc -Wall -g main.c funcs.c -o file_editor.exe",
+    "args": [],
+    // "env": {"": ""}
+    "cwd": "$ZED_DIRNAME",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system"
+  },
+  {
+    "label": "Run C Project",
+    "command": "./file_editor.exe",
+    "args": [],
+    // "env": {"": ""}
+    "cwd": "$ZED_DIRNAME",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system"
+  },
+  {
+    "label": "Compile & run C Project",
+    "command": "gcc -Wall -g main.c funcs.c -o file_editor.exe && ./file_editor.exe",
+    "args": [],
+    // "env": {"": ""}
+    "cwd": "$ZED_DIRNAME",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system"
+  }
+]
