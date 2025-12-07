@@ -25,7 +25,7 @@ int main(void)
             append_file();
             break;
         case '3':
-            // read_file();
+            read_file();
             break;
         case '4':
             log_action("Exiting editor");
