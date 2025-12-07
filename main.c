@@ -22,7 +22,7 @@ int main(void)
             create_file();
             break;
         case '2':
-            // append_file();
+            append_file();
             break;
         case '3':
             // read_file();
