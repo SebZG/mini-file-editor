@@ -13,7 +13,6 @@ void get_timestamp(char *buff, size_t n)
     strftime(buff, n, "[%Y-%m-%d %H:%M:%S]", lt);
 }
 
-
 void log_action(const char *fmt, ...)
 {
     char timebuff[32];
@@ -29,7 +28,7 @@ void log_action(const char *fmt, ...)
     putchar('\n');
 }
 
-void create_file()
+void op(const char *mode, const char *action)
 {
     char *filename = malloc(BUFF_SIZE);
     if (!filename)
@@ -38,7 +37,7 @@ void create_file()
         return;
     }
 
-    printf("Enter new filename: ");
+    printf("%s filename: ", action);
     if (!fgets(filename, BUFF_SIZE, stdin))
     {
         free(filename);
@@ -46,102 +45,39 @@ void create_file()
     }
     filename[strcspn(filename, "\n")] = 0;
 
-    FILE *f = fopen(filename, "w");
+    FILE *f = fopen(filename, mode);
     if (!f)
     {
         perror("fopen");
         free(filename);
         return;
     }
-    log_action("Created file '%s'\n", filename);
+    log_action("%s '%s'\n", action, filename);
 
-    printf("Enter text (end with a single dot on a line):\n");
-    char *line = NULL;
-    size_t len = 0;
-    while (getline(&line, &len, stdin) > 0)
+
+    if (strcmp(action, "Read") == 0)
     {
-        if (strcmp(line, ".\n") == 0)
-            break;
-        fputs(line, f);
+        // Read mode: display file contents
+        char buffer[BUFF_SIZE];
+        while (fgets(buffer, BUFF_SIZE, f))
+        {
+            fputs(buffer, stdout);
+        }
+    }
+    else
+    {
+        printf("Enter text (end with a single dot on a line):\n");
+        char *line = NULL;
+        size_t len = 0;
+        while (getline(&line, &len, stdin) > 0)
+        {
+            if (strcmp(line, ".\n") == 0)
+                break;
+            fputs(line, f);
+        }
+        free(line);
     }
 
-    free(line);
-    fclose(f);
-    free(filename);
-}
-
-void append_file()
-{
-    char *filename = malloc(BUFF_SIZE);
-    if (!filename)
-    {
-        perror("mallloc");
-        return;
-    }
-
-    printf("Enter filename to append: ");
-    if (!fgets(filename, BUFF_SIZE, stdin))
-    {
-        free(filename);
-        return;
-    }
-    filename[strcspn(filename, "\n")] = 0;
-
-    FILE *f = fopen(filename, "a");
-    if (!f)
-    {
-        perror("fopen");
-        free(filename);
-        return;
-    }
-    log_action("Appending to '%s'\n", filename);
-
-    printf("Enter text (end with a single dot on a line):\n");
-    char *line = NULL;
-    size_t len = 0;
-    while (getline(&line, &len, stdin) > 0)
-    {
-        if (strcmp(line, ".\n") == 0)
-            break;
-        fputs(line, f);
-    }
-
-    free(line);
-    fclose(f);
-    free(filename);
-}
-
-void read_file()
-{
-    char *filename = malloc(BUFF_SIZE);
-    if (!filename)
-    {
-        perror("malloc");
-        return;
-    }
-
-    printf("Enter filename to read: ");
-    if (!fgets(filename, BUFF_SIZE, stdin))
-    {
-        free(filename);
-        return;
-    }
-    filename[strcspn(filename, "\n")] = 0;
-
-    FILE *f = fopen(filename, "r");
-    if (!f)
-    {
-        perror("fopen");
-        free(filename);
-        return;
-    }
-    log_action("Reading '%s'\n", filename);
-
-    char buffer[BUFF_SIZE];
-    while (fgets(buffer, BUFF_SIZE, f))
-    {
-        fputs(buffer, stdout);
-    }
     fclose(f);
     free(filename);
 }

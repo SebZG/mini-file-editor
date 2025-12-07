@@ -19,13 +19,13 @@ int main(void)
         switch (choice)
         {
         case '1':
-            create_file();
+            op("w", "Create");
             break;
         case '2':
-            append_file();
+            op("a", "Append");
             break;
         case '3':
-            read_file();
+            op("r", "Read");
             break;
         case '4':
             log_action("Exiting editor");
