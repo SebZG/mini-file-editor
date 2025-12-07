@@ -12,8 +12,5 @@ void log_action(const char *fmt, ...);
 
 // Operations
 void op(const char *mode, const char *action);
-void create_file();
-void append_file();
-void read_file();
 
 #endif // FUNCS_H
